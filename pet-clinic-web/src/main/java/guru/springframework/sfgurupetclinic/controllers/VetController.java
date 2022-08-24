@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class VetController {
 
-    @RequestMapping(path = {"/vets", "/vets/index", "/vets/index.html"})
+    @RequestMapping(path = {"/vets", "/vets/", "/vets/index", "/vets/index.html"})
     public String showListOfVets() {
         return "vets/index";
     }
