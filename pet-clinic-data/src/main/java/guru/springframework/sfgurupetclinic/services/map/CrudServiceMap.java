@@ -1,15 +1,22 @@
 package guru.springframework.sfgurupetclinic.services.map;
 
+import guru.springframework.sfgurupetclinic.model.BaseEntity;
 import guru.springframework.sfgurupetclinic.services.CrudService;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public abstract class CrudServiceMap<T, ID> implements CrudService<T, ID> {
+public class CrudServiceMap<T extends BaseEntity, ID extends Long> implements CrudService<T, ID> {
 
-    protected Map<ID, T> map = new HashMap<>();
+    private Map<Long, T> map = new HashMap<>();
+
+    private Long getNextId() {
+
+        try {
+            return Collections.max(map.keySet()) + 1;
+        } catch (NoSuchElementException e) {
+            return 1L;
+        }
+    }
 
     @Override
     public Set<T> findAll() {
@@ -21,22 +28,27 @@ public abstract class CrudServiceMap<T, ID> implements CrudService<T, ID> {
         return map.get(id);
     }
 
-   /*
-        @Override
-        public T save(T object) {
-            return null;
-        }
-    */
 
-    public T save(ID id, T object) {
+    @Override
+    public T save(T object) {
 
-        map.put(id, object);
+        if (object == null) throw new RuntimeException("object to save cannot be null!");
+
+        if (object.getId() == null) object.setId(getNextId());
+
+        map.put(object.getId(), object);
+
         return object;
     }
 
+
     @Override
     public void delete(T object) {
-        map.entrySet().removeIf(entry -> entry.getValue().equals(object));
+
+        if (object == null) throw new RuntimeException("object to delete cannot be null!");
+
+        //map.entrySet().removeIf(entry -> entry.getValue().equals(object));
+        map.remove(object.getId());
     }
 
     @Override
