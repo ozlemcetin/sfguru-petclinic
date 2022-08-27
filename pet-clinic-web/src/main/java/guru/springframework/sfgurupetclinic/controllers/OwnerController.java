@@ -24,7 +24,7 @@ public class OwnerController {
         http://localhost:8080/owners/index.html
      */
 
-    // @RequestMapping(path = {"/owners", "/owners/index", "/owners/index.html"})
+    // @RequestMapping(path = {"/owners","/owners/", "/owners/index", "/owners/index.html"})
     @RequestMapping(path = {"", "/", "/index", "/index.html"})
     public String showListOfOwners(Model model) {
 
