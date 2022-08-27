@@ -1,14 +1,10 @@
 package guru.springframework.sfgurupetclinic.services.map;
 
-import guru.springframework.sfgurupetclinic.model.Owner;
 import guru.springframework.sfgurupetclinic.model.Pet;
-import guru.springframework.sfgurupetclinic.services.OwnerService;
 import guru.springframework.sfgurupetclinic.services.PetService;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+@Service
 public class PetServiceMap extends CrudServiceMap<Pet, Long> implements PetService {
 
 
