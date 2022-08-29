@@ -15,7 +15,7 @@ public class VetController {
     }
 
 
-    @RequestMapping(path = {"/vets", "/vets/", "/vets/index", "/vets/index.html"})
+    @RequestMapping(path = {"/vets", "/vets/", "/vets/index", "/vets/index.html", "/vets.html"})
     public String showListOfVets(Model model) {
 
         model.addAttribute("vetsList", vetService.findAll());

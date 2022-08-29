@@ -8,6 +8,13 @@ public class IndexController {
 
     @RequestMapping(path = {"", "/", "index", "index.html"})
     public String showIndexPage() {
+
         return "index";
+    }
+
+    @RequestMapping(path = {"/oups"})
+    public String showErrorPage() {
+
+        return "notImplemented";
     }
 }
