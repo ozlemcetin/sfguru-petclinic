@@ -28,7 +28,7 @@ public class OwnerServiceMap extends CrudServiceMap<Owner, Long> implements Owne
 
         Owner savedOwner = super.save(object);
 
-        if (savedOwner.getPets() != null) {
+        if (savedOwner.getPets() != null && savedOwner.getPets().size() > 0) {
 
             savedOwner.getPets().forEach(pet -> {
 
