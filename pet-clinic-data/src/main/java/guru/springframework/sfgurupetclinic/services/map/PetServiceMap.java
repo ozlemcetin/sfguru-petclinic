@@ -1,24 +1,41 @@
 package guru.springframework.sfgurupetclinic.services.map;
 
 import guru.springframework.sfgurupetclinic.model.Pet;
+import guru.springframework.sfgurupetclinic.model.PetType;
 import guru.springframework.sfgurupetclinic.model.Visit;
 import guru.springframework.sfgurupetclinic.services.PetService;
+import guru.springframework.sfgurupetclinic.services.PetTypeService;
 import guru.springframework.sfgurupetclinic.services.VisitService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PetServiceMap extends CrudServiceMap<Pet, Long> implements PetService {
 
+    private final PetTypeService petTypeService;
     private final VisitService visitService;
 
-    public PetServiceMap(VisitService visitService) {
+    public PetServiceMap(PetTypeService petTypeService, VisitService visitService) {
+        this.petTypeService = petTypeService;
         this.visitService = visitService;
     }
 
-    @Override
-    public Pet save(Pet object) {
 
-        Pet savedPet = super.save(object);
+    @Override
+    public Pet save(Pet pet) {
+
+        if (pet.getOwner() == null || pet.getOwner().getId() == null)
+            throw new RuntimeException("Owner is required to save the pet object!");
+
+        if (pet.getPetType() == null) throw new RuntimeException("Pet Type is required to save the pet object!");
+
+        Pet savedPet = super.save(pet);
+
+        //if not saved already
+        if (pet.getPetType().getId() == null) {
+
+            PetType savedPetType = petTypeService.save(pet.getPetType());
+            pet.setPetType(savedPetType);
+        }
 
         if (savedPet.getVisits() != null && savedPet.getVisits().size() > 0) {
 

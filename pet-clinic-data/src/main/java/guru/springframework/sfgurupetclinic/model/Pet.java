@@ -19,7 +19,16 @@ public class Pet extends BaseEntity {
     ===
      */
 
-    /*
+     /*
+        We don't do any cascading here.
+        If we delete a pet  we don't want to cascade the delete operation to the owner
+     */
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
+
+     /*
         We don't need a bidirectional relationship.
         This is a unidirectional relationship from Pet to PetType.
         We DO NOT cascade persistence events form Pet to PetType.
@@ -30,19 +39,10 @@ public class Pet extends BaseEntity {
     private PetType petType;
 
 
-     /*
-        We don't do any cascading here.
-        If we delete a pet  we don't want to cascade the delete operation to the owner
-     */
-
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
-
 
     /*
          Use @OneToMany to set up a relationship mapping.
-         CascadeType.ALL means if we are to delete a pet, that's going to cascade down.
+         CascadeType.ALL means if we are to delete a pet, that's going to cascade down on visits.
      */
 
      /*
