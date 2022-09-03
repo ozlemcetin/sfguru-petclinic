@@ -4,6 +4,7 @@ import guru.springframework.sfgurupetclinic.model.Owner;
 import guru.springframework.sfgurupetclinic.model.Pet;
 import guru.springframework.sfgurupetclinic.services.OwnerService;
 import guru.springframework.sfgurupetclinic.services.PetService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,8 +12,8 @@ import java.util.Set;
 
 
 @Service
+@Profile({"default", "map"})
 public class OwnerServiceMap extends CrudServiceMap<Owner, Long> implements OwnerService {
-
 
     private final PetService petService;
 

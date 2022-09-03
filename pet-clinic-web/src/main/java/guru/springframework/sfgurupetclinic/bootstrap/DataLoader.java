@@ -11,16 +11,15 @@ import java.time.LocalDate;
 public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
+    private final PetService petService;
     private final VetService vetService;
-
     private final PetTypeService petTypeService;
-
     private final SpecialityService specialityService;
-
     private final VisitService visitService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService, VisitService visitService) {
+    public DataLoader(OwnerService ownerService, PetService petService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService, VisitService visitService) {
         this.ownerService = ownerService;
+        this.petService = petService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
@@ -50,8 +49,13 @@ public class DataLoader implements CommandLineRunner {
         }
 
 
-        PetType catPetType = new PetType();
-        catPetType.setName("Cat");
+        PetType savedCatPetType = null;
+        {
+            PetType petType = new PetType();
+            petType.setName("Cat");
+
+            savedCatPetType = petTypeService.save(petType);
+        }
 
 
         {
@@ -79,7 +83,6 @@ public class DataLoader implements CommandLineRunner {
             ownerService.save(owner1);
         }
 
-        Pet fionasCat = null;
         {
             Owner owner2 = new Owner();
             owner2.setFirstName("Fiona");
@@ -88,22 +91,33 @@ public class DataLoader implements CommandLineRunner {
             owner2.setCity("Miami");
             owner2.setTelephone("1231231234");
 
+            //pets
             {
-
-                fionasCat = new Pet();
+                Pet fionasCat = new Pet();
                 fionasCat.setName("Ray");
                 fionasCat.setBirthDate(LocalDate.now());
                 fionasCat.setOwner(owner2);
-                fionasCat.setPetType(catPetType);
+                fionasCat.setPetType(savedCatPetType);
 
                 //visits
                 {
-                    Visit visit1 = new Visit();
-                    visit1.setDate(LocalDate.now());
-                    visit1.setDescription("Sneezy Kitty");
-                    visit1.setPet(fionasCat);
+                    {
+                        Visit visit1 = new Visit();
+                        visit1.setDate(LocalDate.now());
+                        visit1.setDescription("Sneezy Kitty");
+                        visit1.setPet(fionasCat);
 
-                    fionasCat.getVisits().add(visit1);
+                        fionasCat.getVisits().add(visit1);
+                    }
+
+                    {
+                        Visit visit2 = new Visit();
+                        visit2.setDate(LocalDate.now());
+                        visit2.setDescription("Broken front paw");
+                        visit2.setPet(fionasCat);
+
+                        fionasCat.getVisits().add(visit2);
+                    }
                 }
 
                 //add
@@ -113,15 +127,28 @@ public class DataLoader implements CommandLineRunner {
             ownerService.save(owner2);
         }
 
+        Pet fionasDog = null;
         {
+            Owner owner = ownerService.findByLastName("Glenanne");
 
-            Visit visit2 = new Visit();
-            visit2.setDate(LocalDate.now());
-            visit2.setDescription("Kitty Washing");
-            visit2.setPet(fionasCat);
+            fionasDog = new Pet();
+            fionasDog.setName("Sunny");
+            fionasDog.setBirthDate(LocalDate.now());
+            fionasDog.setOwner(owner);
+            fionasDog.setPetType(savedDogPetType);
 
-            visitService.save(visit2);
+            petService.save(fionasDog);
         }
+
+        {
+            Visit visit = new Visit();
+            visit.setDate(LocalDate.now());
+            visit.setDescription("Dog Washing");
+            visit.setPet(fionasDog);
+
+            visitService.save(visit);
+        }
+
 
         Speciality savedRadiology = null;
         {
@@ -131,11 +158,21 @@ public class DataLoader implements CommandLineRunner {
             savedRadiology = specialityService.save(radiology);
         }
 
-        Speciality surgery = new Speciality();
-        surgery.setDescription("Surgery");
+        Speciality savedSurgery = null;
+        {
+            Speciality surgery = new Speciality();
+            surgery.setDescription("Surgery");
 
-        Speciality dentistry = new Speciality();
-        dentistry.setDescription("dentistry");
+            savedSurgery = specialityService.save(surgery);
+        }
+
+        Speciality savedDentistry = null;
+        {
+            Speciality dentistry = new Speciality();
+            dentistry.setDescription("dentistry");
+
+            savedDentistry = specialityService.save(dentistry);
+        }
 
         {
             Vet vet1 = new Vet();
@@ -144,7 +181,7 @@ public class DataLoader implements CommandLineRunner {
 
             {
                 vet1.getSpecialities().add(savedRadiology);
-                vet1.getSpecialities().add(surgery);
+                vet1.getSpecialities().add(savedSurgery);
             }
 
             vetService.save(vet1);
@@ -156,8 +193,8 @@ public class DataLoader implements CommandLineRunner {
             vet2.setLastName("Porter");
 
             {
-                vet2.getSpecialities().add(surgery);
-                vet2.getSpecialities().add(dentistry);
+                vet2.getSpecialities().add(savedSurgery);
+                vet2.getSpecialities().add(savedDentistry);
             }
 
             vetService.save(vet2);
