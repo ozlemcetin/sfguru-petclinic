@@ -2,6 +2,8 @@ package guru.springframework.sfgurupetclinic.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pets")
@@ -36,6 +38,23 @@ public class Pet extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private Owner owner;
+
+
+    /*
+         Use @OneToMany to set up a relationship mapping.
+         CascadeType.ALL means if we are to delete a pet, that's going to cascade down.
+     */
+
+     /*
+       Pet owns the Visit.
+       For mappedBy, use the target property on the child class.
+       This Pet will get stored on the child object
+       The Visit has a property called pet.
+     */
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
+    private Set<Visit> visits = new HashSet<>();
+
 
     /*
     ===
@@ -73,5 +92,11 @@ public class Pet extends BaseEntity {
         this.name = name;
     }
 
+    public Set<Visit> getVisits() {
+        return visits;
+    }
 
+    public void setVisits(Set<Visit> visits) {
+        this.visits = visits;
+    }
 }
