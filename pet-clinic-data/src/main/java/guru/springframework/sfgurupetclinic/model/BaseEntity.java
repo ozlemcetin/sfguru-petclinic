@@ -9,6 +9,7 @@ import java.io.Serializable;
 /*
     @MappedSuperclass establishes this class as a base class in JPA.
     We don't need this class mapped to the database.
+    We expect other classes to inherit from this class.
  */
 @MappedSuperclass
 public class BaseEntity implements Serializable {

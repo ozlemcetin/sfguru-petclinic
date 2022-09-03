@@ -1,16 +1,41 @@
 package guru.springframework.sfgurupetclinic.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "pets")
 public class Pet extends BaseEntity {
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
+    /*
+    ===
+     */
+
+        /*
+           We don't need a bidirectional relationship.
+           This is a unidirectional relationship from Pet to PetType.
+           We DO NOT cascade persistence events form Pet to PetType.
+        */
+
+    @OneToOne
+    @JoinColumn(name = "type_id")
     private PetType petType;
 
-    private Owner owner;
 
-    private LocalDate birthDate;
+     /*
+        We don't do any cascading here.
+        If we delete a pet  we don't want to cascade the delete operation to the owner
+     */
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
 
     /*
     ===
