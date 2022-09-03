@@ -17,11 +17,11 @@ public class Pet extends BaseEntity {
     ===
      */
 
-        /*
-           We don't need a bidirectional relationship.
-           This is a unidirectional relationship from Pet to PetType.
-           We DO NOT cascade persistence events form Pet to PetType.
-        */
+    /*
+        We don't need a bidirectional relationship.
+        This is a unidirectional relationship from Pet to PetType.
+        We DO NOT cascade persistence events form Pet to PetType.
+     */
 
     @OneToOne
     @JoinColumn(name = "type_id")
@@ -72,4 +72,6 @@ public class Pet extends BaseEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }
