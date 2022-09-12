@@ -13,14 +13,11 @@ import org.springframework.stereotype.Service;
 @Profile({"default", "map"})
 public class PetServiceMap extends CrudServiceMap<Pet, Long> implements PetService {
 
-    private final PetTypeService petTypeService;
     private final VisitService visitService;
 
-    public PetServiceMap(PetTypeService petTypeService, VisitService visitService) {
-        this.petTypeService = petTypeService;
+    public PetServiceMap(VisitService visitService) {
         this.visitService = visitService;
     }
-
 
     @Override
     public Pet save(Pet pet) {

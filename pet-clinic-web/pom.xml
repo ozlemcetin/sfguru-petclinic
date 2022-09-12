@@ -10,7 +10,6 @@
 
     <artifactId>pet-clinic-web</artifactId>
 
-
     <properties>
         <!-- Web dependencies -->
         <webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
@@ -83,6 +82,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>ro.isdc.wro4j</groupId>
                 <artifactId>wro4j-maven-plugin</artifactId>

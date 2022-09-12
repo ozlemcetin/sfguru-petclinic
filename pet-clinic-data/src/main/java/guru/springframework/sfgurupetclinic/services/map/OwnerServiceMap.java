@@ -47,14 +47,12 @@ public class OwnerServiceMap extends CrudServiceMap<Owner, Long> implements Owne
     @Override
     public Owner findByLastName(String lastName) {
 
-        Set<Owner> set = findAll();
-
-        Optional<Owner> ownerOptional = set.stream()
+        return this.findAll().stream()
 
                 .filter(owner -> owner.getLastName().equalsIgnoreCase(lastName))
 
-                .findFirst();
+                .findFirst()
 
-        return ownerOptional.orElse(null);
+                .orElse(null);
     }
 }

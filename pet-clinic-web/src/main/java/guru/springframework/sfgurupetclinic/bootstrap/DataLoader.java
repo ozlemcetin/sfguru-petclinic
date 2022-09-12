@@ -60,9 +60,7 @@ public class DataLoader implements CommandLineRunner {
 
 
         {
-            Owner owner1 = Owner.builder().firstName("Michael").lastName("Weston")
-
-                    .address("123 Brickerel").city("Miami").telephone("1231231234").pets(new HashSet<>()).build();
+            Owner owner1 = Owner.builder().firstName("Michael").lastName("Weston").address("123 Brickerel").city("Miami").telephone("1231231234").pets(new HashSet<>()).build();
 
             //pets
             {
