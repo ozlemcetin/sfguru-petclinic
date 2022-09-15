@@ -30,6 +30,7 @@ jobs: # Below is the definition of your job to build and test your app, you can 
             - ~/.m2
           key: sfguru-petclinic-{{ checksum "pom.xml" }}
 
+      - run: mvn install -DskipTests
       - run: mvn dependency:go-offline
 
       # Then run your tests!
