@@ -2,8 +2,6 @@ package guru.springframework.sfgurupetclinic.services.map;
 
 import guru.springframework.sfgurupetclinic.model.Owner;
 import guru.springframework.sfgurupetclinic.services.PetService;
-import guru.springframework.sfgurupetclinic.services.PetTypeService;
-import guru.springframework.sfgurupetclinic.services.VisitService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,12 +9,10 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class OwnerServiceMapTest {
 
     private OwnerServiceMap ownerService;
-    private Owner owner1;
+    private Owner setupOwner;
 
     @BeforeEach
     void setUp() {
@@ -27,8 +23,8 @@ class OwnerServiceMapTest {
 
         //Put one owner object into the map
         {
-            owner1 = Owner.builder().firstName("Michael").lastName("Weston").address("123 Brickerel").city("Miami").telephone("1231231234").pets(new HashSet<>()).build();
-            ownerService.save(owner1);
+            setupOwner = Owner.builder().firstName("Michael").lastName("Weston").address("123 Brickerel").city("Miami").telephone("1231231234").pets(new HashSet<>()).build();
+            ownerService.save(setupOwner);
         }
     }
 
@@ -38,16 +34,16 @@ class OwnerServiceMapTest {
 
         //Assertions
         Assertions.assertEquals(set.size(), 1);
-        Assertions.assertTrue(set.contains(owner1));
+        Assertions.assertTrue(set.contains(setupOwner));
     }
 
     @Test
     void findById() {
-        Owner foundOwner = ownerService.findById(owner1.getId());
+        Owner foundOwner = ownerService.findById(setupOwner.getId());
 
         //Assertions
         Assertions.assertNotNull(foundOwner);
-        Assertions.assertEquals(foundOwner.getId(), owner1.getId());
+        Assertions.assertEquals(foundOwner.getId(), setupOwner.getId());
     }
 
     @Test
@@ -64,8 +60,6 @@ class OwnerServiceMapTest {
         Assertions.assertEquals(id, savedOwner.getId());
     }
 
-
-
     @Test
     void saveNoId() {
         Owner savedOwner = null;
@@ -81,7 +75,7 @@ class OwnerServiceMapTest {
 
     @Test
     void delete() {
-        ownerService.delete(owner1);
+        ownerService.delete(setupOwner);
 
         //Assertions
         Assertions.assertTrue(ownerService.findAll().isEmpty());
@@ -89,7 +83,7 @@ class OwnerServiceMapTest {
 
     @Test
     void deleteById() {
-        ownerService.deleteById(owner1.getId());
+        ownerService.deleteById(setupOwner.getId());
 
         //Assertions
         Assertions.assertTrue(ownerService.findAll().isEmpty());
@@ -97,11 +91,11 @@ class OwnerServiceMapTest {
 
     @Test
     void findByLastNameWithName() {
-        Owner foundOwner = ownerService.findByLastName(owner1.getLastName());
+        Owner foundOwner = ownerService.findByLastName(setupOwner.getLastName());
 
         //Assertions
         Assertions.assertNotNull(foundOwner);
-        Assertions.assertEquals(foundOwner.getId(), owner1.getId());
+        Assertions.assertEquals(foundOwner.getId(), setupOwner.getId());
     }
 
     @Test
