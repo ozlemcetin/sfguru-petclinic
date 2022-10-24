@@ -31,5 +31,10 @@ public class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    /*
+         th:with="text=${owner['new']} ? 'Add Owner' : 'Update Owner'"
+     */
+    public boolean isNew() {
+        return this.id == null;
+    }
 }
