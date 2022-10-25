@@ -56,7 +56,7 @@ public class Owner extends Person {
         this.address = address;
         this.city = city;
         this.telephone = telephone;
-        if (pets != null) this.pets = pets;
+        if (pets != null && pets.size() > 0) this.pets = pets;
     }
 
     /*
