@@ -51,15 +51,12 @@ public class PetController {
     //public void InitPetBinder(WebDataBinder dataBinder) {dataBinder.setValidator(new PetValidator());}
 
     @GetMapping("/pets/new")
-    public String initCreationForm(Owner owner, Model model) {
+    public String initCreationForm(@ModelAttribute("owner") Owner owner, Model model) {
 
         //addAttribute
         Pet pet = Pet.builder().build();
         pet.setOwner(owner);
         model.addAttribute("pet", pet);
-
-        //add pet
-        owner.getPets().add(pet);
 
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
@@ -79,16 +76,18 @@ public class PetController {
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         }
 
-        owner.getPets().add(pet);
         petService.save(pet);
         return "redirect:/owners/" + owner.getId();
     }
 
     @GetMapping("/pets/{petId}/edit")
-    public String initUpdateForm(@PathVariable Long petId, Model model) {
+    public String initUpdateForm(Owner owner, Model model, @PathVariable Long petId) {
 
         //addAttribute
-        model.addAttribute("pet", petService.findById(petId));
+        Pet pet = petService.findById(petId);
+        pet.setOwner(owner);
+        model.addAttribute("pet", pet);
+
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
 
@@ -101,9 +100,8 @@ public class PetController {
             pet.setOwner(owner);
             model.addAttribute("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
-            }
+        }
 
-        owner.getPets().add(pet);
         petService.save(pet);
         return "redirect:/owners/" + owner.getId();
     }
