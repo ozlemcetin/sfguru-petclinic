@@ -22,10 +22,8 @@ class OwnerServiceMapTest {
         ownerService = new OwnerServiceMap(petService);
 
         //Put one owner object into the map
-        {
-            setupOwner = Owner.builder().firstName("Michael").lastName("Weston").address("123 Brickerel").city("Miami").telephone("1231231234").pets(new HashSet<>()).build();
-            ownerService.save(setupOwner);
-        }
+        setupOwner = Owner.builder().firstName("Michael").lastName("Weston").address("123 Brickerel").city("Miami").telephone("1231231234").pets(new HashSet<>()).build();
+        ownerService.save(setupOwner);
     }
 
     @Test

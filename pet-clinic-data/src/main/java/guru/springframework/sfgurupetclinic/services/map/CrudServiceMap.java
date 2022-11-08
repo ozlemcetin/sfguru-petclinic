@@ -7,7 +7,7 @@ import java.util.*;
 
 public class CrudServiceMap<T extends BaseEntity, ID extends Long> implements CrudService<T, ID> {
 
-    private Map<Long, T> map = new HashMap<>();
+    private final Map<Long, T> map = new HashMap<>();
 
     private Long getNextId() {
 

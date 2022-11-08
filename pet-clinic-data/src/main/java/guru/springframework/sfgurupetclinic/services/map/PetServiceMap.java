@@ -22,11 +22,11 @@ public class PetServiceMap extends CrudServiceMap<Pet, Long> implements PetServi
     @Override
     public Pet save(Pet pet) {
 
-        if (pet.getOwner() == null || pet.getOwner().getId() == null)
-            throw new RuntimeException("Owner is required to save the pet object!");
+        // if (pet.getOwner() == null || pet.getOwner().getId() == null)
+        // throw new RuntimeException("Owner is required to save the pet object!");
 
-        if (pet.getPetType() == null || pet.getPetType().getId() == null)
-            throw new RuntimeException("Pet Type is required to save the pet object!");
+        // if (pet.getPetType() == null || pet.getPetType().getId() == null)
+        // throw new RuntimeException("Pet Type is required to save the pet object!");
 
         Pet savedPet = super.save(pet);
 

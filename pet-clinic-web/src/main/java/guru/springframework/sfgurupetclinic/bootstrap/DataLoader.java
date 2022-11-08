@@ -165,7 +165,7 @@ public class DataLoader implements CommandLineRunner {
         Speciality savedDentistry = null;
         {
             Speciality dentistry = new Speciality();
-            dentistry.setDescription("dentistry");
+            dentistry.setDescription("Dentistry");
 
             savedDentistry = specialityService.save(dentistry);
         }
