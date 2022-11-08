@@ -1,6 +1,7 @@
 package guru.springframework.sfgurupetclinic.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,7 +20,11 @@ public class Pet extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    /*
+        Declaring the same date pattern form html/thymleaf on Pet birthdate.
+     */
     @Column(name = "birth_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     /*
